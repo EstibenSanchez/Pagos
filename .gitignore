@@ -1,0 +1,39 @@
+# Archivos compilados
+target/
+build/
+*.class
+*.jar
+*.war
+
+# Archivos de configuración IDE
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# Logs
+logs/
+*.log
+
+# Archivos de propiedades locales
+src/main/resources/application-local.properties
+src/main/resources/application-dev.properties
+.env
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Dependencias
+node_modules/
+
+# Archivos temporales
+*.tmp
+*.bak
+*.swp
+*~.nib
+
+# Docker
+.docker/data/
