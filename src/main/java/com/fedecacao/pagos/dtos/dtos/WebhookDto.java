@@ -3,13 +3,12 @@ package com.fedecacao.pagos.dtos.dtos;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
 public class WebhookDto {
     private String type;
-    private Date eventDate;
+    private LocalDateTime eventDate;
     private TransactionDto transaction;
-    private String method;
 }
