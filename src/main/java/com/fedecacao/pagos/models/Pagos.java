@@ -2,6 +2,7 @@ package com.fedecacao.pagos.models;
 
 
 import com.fedecacao.pagos.enums.CodEstadoPago;
+import com.fedecacao.pagos.enums.CodMedioPago;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,6 +21,8 @@ public class Pagos {
     @NonNull
     @Enumerated(EnumType.STRING)
     private CodEstadoPago codEstadoPago;
+    @Enumerated(EnumType.STRING)
+    private CodMedioPago codMedioPago;
     private BigDecimal valorPagado;
     private Date fechaPago;
 

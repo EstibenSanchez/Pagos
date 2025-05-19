@@ -28,6 +28,7 @@ public class PagosController {
     public ResponseEntity<Void> receiveWebhookEvent(@RequestBody Object payload,
                                                     @RequestHeader(value = "X-Webhook-Signature", required = false) String signature) {
         log.info("Evento de webhook recibido: {}", payload);
+        log.info("Firma del webhook: {}", signature);
 
         // Verificar la firma del webhook (opcional pero recomendado)
 //        if (signature != null && !webhookService.verifySignature(payload, signature)) {
@@ -35,7 +36,7 @@ public class PagosController {
 //        }
 
         // Procesar el evento
-        //webhookService.processWebhookEvent(payload);
+        //pagosService.processWebhookEvent(payload);
 
         return ResponseEntity.ok().build();
     }

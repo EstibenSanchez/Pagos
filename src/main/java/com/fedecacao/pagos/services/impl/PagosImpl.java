@@ -16,4 +16,6 @@ public interface PagosImpl {
     void updatePagos(PagosDto pagosDto);
 
     List<PagosDto> getTopPagosByFranchise(int franchiseId);
+
+    //void processWebhookEvent();
 }
