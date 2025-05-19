@@ -1,6 +1,7 @@
 package com.fedecacao.pagos.controllers;
 
 import com.fedecacao.pagos.dtos.dtos.PagosDto;
+import com.fedecacao.pagos.dtos.dtos.WebhookDto;
 import com.fedecacao.pagos.services.impl.PagosImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +26,8 @@ public class PagosController {
      }
 
     @PostMapping("/receive")
-    public ResponseEntity<Void> receiveWebhookEvent(@RequestBody Object payload,
-                                                    @RequestHeader(value = "X-Webhook-Signature", required = false) String signature) {
+    public ResponseEntity<Void> receiveWebhookEvent(@RequestBody WebhookDto payload) {
         log.info("Evento de webhook recibido: {}", payload);
-        log.info("Firma del webhook: {}", signature);
 
         // Verificar la firma del webhook (opcional pero recomendado)
 //        if (signature != null && !webhookService.verifySignature(payload, signature)) {
