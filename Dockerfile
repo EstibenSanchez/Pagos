@@ -12,6 +12,6 @@ WORKDIR /app
 COPY --from=build /app/target/pagos-0.0.1-SNAPSHOT.jar app.jar
 # COPY .env .env
 
-EXPOSE 8080
+EXPOSE 8010
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
