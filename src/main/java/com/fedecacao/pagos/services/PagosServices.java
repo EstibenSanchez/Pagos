@@ -36,7 +36,8 @@ public class PagosServices implements PagosImpl {
 
     @Override
     public PagosDto getPagosById(String id) {
-        return pagosRepository.findByCodPagoRealizado(id);
+        Pagos pagos = pagosRepository.findByCodPagoRealizado(id);
+        return pagosMapper.toDto(pagos);
     }
 
     @Override
@@ -49,29 +50,25 @@ public class PagosServices implements PagosImpl {
 
     }
 
-    @Override
-    public List<PagosDto> getTopPagosByFranchise(int franchiseId) {
-        return List.of();
-    }
 
     @Override
     public void processWebhookEvent(WebhookDto payload) {
-        PagosDto pagosDto = pagosRepository.findByCodPagoRealizado(payload.getTransaction().getId());
-        pagosDto.setFechaPago(payload.getEvent_date());
-        pagosDto.setCodMedioPago(CodMedioPago.valueOf(payload.getTransaction().getMethod()));
-        pagosDto.setValorPagado(payload.getTransaction().getAmount());
+        Pagos pagos = pagosRepository.findByCodPagoRealizado(payload.getTransaction().getId());
+        pagos.setFechaPago(payload.getEvent_date());
+        pagos.setCodMedioPago(CodMedioPago.valueOf(payload.getTransaction().getMethod()));
+        pagos.setValorPagado(payload.getTransaction().getAmount());
         switch(payload.getType()) {
             case "charge.created":
-                pagosDto.setCodEstadoPago(CodEstadoPago.PENDIENTE);
+                pagos.setCodEstadoPago(CodEstadoPago.PENDIENTE);
                 break;
             case "charge.cancelled":
-                pagosDto.setCodEstadoPago(CodEstadoPago.CANCELADO);
+                pagos.setCodEstadoPago(CodEstadoPago.CANCELADO);
                 break;
             case "charge.failed":
-                pagosDto.setCodEstadoPago(CodEstadoPago.FALLO);
+                pagos.setCodEstadoPago(CodEstadoPago.FALLO);
                 break;
             case  "charge.succeeded":
-                pagosDto.setCodEstadoPago(CodEstadoPago.APROBADO);
+                pagos.setCodEstadoPago(CodEstadoPago.APROBADO);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown event type: " + payload.getType());

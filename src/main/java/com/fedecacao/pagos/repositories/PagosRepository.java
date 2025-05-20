@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PagosRepository extends JpaRepository<Pagos, Integer> {
-    PagosDto findByCodPagoRealizado(String id);
+    Pagos findByCodPagoRealizado(String id);
 }
