@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,5 +19,5 @@ public class PagosDto {
     private CodEstadoPago codEstadoPago;
     private CodMedioPago codMedioPago;
     private BigDecimal valorPagado;
-    private Date fechaPago;
+    private LocalDateTime fechaPago;
 }

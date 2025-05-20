@@ -8,6 +8,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -24,6 +25,6 @@ public class Pagos {
     @Enumerated(EnumType.STRING)
     private CodMedioPago codMedioPago;
     private BigDecimal valorPagado;
-    private Date fechaPago;
+    private LocalDateTime fechaPago;
 
 }

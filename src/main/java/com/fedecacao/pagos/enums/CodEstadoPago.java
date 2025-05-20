@@ -3,7 +3,8 @@ package com.fedecacao.pagos.enums;
 public enum CodEstadoPago {
     PENDIENTE("P"),
     APROBADO("A"),
-    RECHAZADO("R");
+    FALLO("F"),
+    CANCELADO("C");
 
     private final String codigo;
 

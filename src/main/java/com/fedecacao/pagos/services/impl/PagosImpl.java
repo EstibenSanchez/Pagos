@@ -1,6 +1,7 @@
 package com.fedecacao.pagos.services.impl;
 
 import com.fedecacao.pagos.dtos.dtos.PagosDto;
+import com.fedecacao.pagos.dtos.dtos.WebhookDto;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ public interface PagosImpl {
 
     List<PagosDto> getAllPagos();
 
-    PagosDto getPagosById(int id);
+    PagosDto getPagosById(String id);
 
     void deletePagosById(int id);
 
@@ -17,5 +18,5 @@ public interface PagosImpl {
 
     List<PagosDto> getTopPagosByFranchise(int franchiseId);
 
-    //void processWebhookEvent();
+    void processWebhookEvent( WebhookDto payload);
 }
