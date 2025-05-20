@@ -8,11 +8,13 @@ import com.fedecacao.pagos.enums.CodMedioPago;
 import com.fedecacao.pagos.models.Pagos;
 import com.fedecacao.pagos.repositories.PagosRepository;
 import com.fedecacao.pagos.services.impl.PagosImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class PagosServices implements PagosImpl {
 
     private final PagosRepository pagosRepository;
@@ -53,10 +55,11 @@ public class PagosServices implements PagosImpl {
 
     @Override
     public void processWebhookEvent(WebhookDto payload) {
+        log.info("Cod que se esta buscando: {}", payload.getTransaction().getId());
         Pagos pagos = pagosRepository.findByCodPagoRealizado(payload.getTransaction().getId());
         pagos.setFechaPago(payload.getEvent_date());
         pagos.setCodMedioPago(CodMedioPago.valueOf(payload.getTransaction().getMethod()));
-        pagos.setValorPagado(payload.getTransaction().getAmount());
+
         switch(payload.getType()) {
             case "charge.created":
                 pagos.setCodEstadoPago(CodEstadoPago.PENDIENTE);
@@ -69,9 +72,11 @@ public class PagosServices implements PagosImpl {
                 break;
             case  "charge.succeeded":
                 pagos.setCodEstadoPago(CodEstadoPago.APROBADO);
+                pagos.setValorPagado(payload.getTransaction().getAmount());
                 break;
             default:
                 throw new IllegalArgumentException("Unknown event type: " + payload.getType());
         }
+        pagosRepository.save(pagos);
     }
 }
