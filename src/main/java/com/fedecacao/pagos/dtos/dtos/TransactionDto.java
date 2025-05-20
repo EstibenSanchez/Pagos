@@ -17,4 +17,5 @@ public class TransactionDto {
     private BigDecimal amount;
     private String description;
     private String method;
+    private String order_id;
 }

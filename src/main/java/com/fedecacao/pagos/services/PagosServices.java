@@ -56,13 +56,15 @@ public class PagosServices implements PagosImpl {
     @Override
     public void processWebhookEvent(WebhookDto payload) {
         log.info("Cod que se esta buscando: {}", payload.getTransaction().getId());
-        Pagos pagos = pagosRepository.findByCodPagoRealizado(payload.getTransaction().getId());
-        pagos.setFechaPago(payload.getEvent_date());
-        pagos.setCodMedioPago(CodMedioPago.valueOf(payload.getTransaction().getMethod()));
+        Pagos pagos = pagosRepository.findByCodPagoRealizado(payload.getTransaction().getOrder_id());
 
         switch(payload.getType()) {
             case "charge.created":
-                pagos.setCodEstadoPago(CodEstadoPago.PENDIENTE);
+                if (pagos == null) {
+                    pagos = new Pagos();
+                    pagos.setCodPagoRealizado(payload.getTransaction().getOrder_id());
+                    pagos.setCodEstadoPago(CodEstadoPago.PENDIENTE);
+                }
                 break;
             case "charge.cancelled":
                 pagos.setCodEstadoPago(CodEstadoPago.CANCELADO);
@@ -77,6 +79,8 @@ public class PagosServices implements PagosImpl {
             default:
                 throw new IllegalArgumentException("Unknown event type: " + payload.getType());
         }
+        pagos.setFechaPago(payload.getEvent_date());
+        pagos.setCodMedioPago(CodMedioPago.valueOf(payload.getTransaction().getMethod()));
         pagosRepository.save(pagos);
     }
 }
